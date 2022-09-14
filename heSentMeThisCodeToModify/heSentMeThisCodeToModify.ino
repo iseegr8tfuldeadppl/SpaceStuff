@@ -18,14 +18,12 @@ void loop() {
   if(motor_turning){
     if(millis() - last_step >= stepping_period){
       last_step = millis();
-      stepper.step(true);
+      stepper.move(true, 1);
     }
     digitalWrite (ledOrange, HIGH);
     digitalWrite (ledRed, LOW);
   } else {
     digitalWrite (ledOrange, HIGH);
     digitalWrite (ledRed, LOW);
-    stepper.step(false);
   }
-  delay(6);
 }
