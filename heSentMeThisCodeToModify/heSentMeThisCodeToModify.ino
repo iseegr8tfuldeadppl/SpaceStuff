@@ -16,10 +16,10 @@ void loop() {
   motor_turning = !digitalRead(A4) == HIGH && (digitalRead(A5) == HIGH || motor_turning);
   
   if(motor_turning){
-    if(millis() - last_step >= stepping_period){
+    //if(millis() - last_step >= stepping_period){
       last_step = millis();
-      stepper.move(true, 1);
-    }
+      stepper.move(true, 100);
+    //}
     digitalWrite (ledOrange, HIGH);
     digitalWrite (ledRed, LOW);
   } else {
