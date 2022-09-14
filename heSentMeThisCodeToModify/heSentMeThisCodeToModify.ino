@@ -9,14 +9,19 @@ void setup() {
   pinMode(ledRed, OUTPUT);
 }
 
+double last_step = 0.0;
+double stepping_period = 3.523225 * 1000;
 boolean motor_turning = false;
 void loop() {
   motor_turning = !digitalRead(A4) == HIGH && (digitalRead(A5) == HIGH || motor_turning);
   
   if(motor_turning){
+    if(millis() - last_step >= stepping_period){
+      last_step = millis();
+      stepper.step(true);
+    }
     digitalWrite (ledOrange, HIGH);
     digitalWrite (ledRed, LOW);
-    stepper.step(true);
   } else {
     digitalWrite (ledOrange, HIGH);
     digitalWrite (ledRed, LOW);
