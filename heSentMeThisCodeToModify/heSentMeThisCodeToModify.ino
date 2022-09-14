@@ -5,23 +5,22 @@ CheapStepper stepper;
 #define ledRed 3
 
 void setup() {
-  Serial.begin(9600);
   pinMode(ledOrange, OUTPUT);
   pinMode(ledRed, OUTPUT);
 }
 
+boolean motor_turning = false;
 void loop() {
-  Serial.println("A4: " + String(digitalRead(A4)) + " A5: " + String(digitalRead(A5)));
-  if (digitalRead(A4) == HIGH){
-    digitalWrite (ledOrange, HIGH);
-    digitalWrite (ledRed, LOW);
-    stepper.step(false);
-    delay(6);
-  }
-  if (digitalRead(A5) == HIGH){
+  motor_turning = !digitalRead(A4) == HIGH && (digitalRead(A5) == HIGH || motor_turning);
+  
+  if(motor_turning){
     digitalWrite (ledOrange, HIGH);
     digitalWrite (ledRed, LOW);
     stepper.step(true);
-    delay(6);
+  } else {
+    digitalWrite (ledOrange, HIGH);
+    digitalWrite (ledRed, LOW);
+    stepper.step(false);
   }
+  delay(6);
 }
